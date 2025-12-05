@@ -5,13 +5,16 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Paper from "@mui/material/Paper";
 import CheckboxList from "./components/List";
 import SingleLine from "./components/SingleLine";
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
 
+  const url = import.meta.env.VITE_BACKEND_URL;
+
   const toggleTodoState = async (id, done) => {
     console.log(id, done);
-    await fetch(`http://localhost:3000/todos/${id}`, {
+    await fetch(`${url}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +29,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await fetch(`http://localhost:3000/todos/${id}`, {
+    await fetch(`${url}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -41,13 +44,14 @@ function App() {
 
   const getTodos = async () => {
     console.log("getting todos...");
-    const res = await fetch(`http://localhost:3000/todos?_sort=-timestamp`);
+    const res = await fetch(`${url}?_sort=-timestamp`);
+
     const todos = await res.json();
-    setTodos(todos);
+
     console.log("todos : ", todos);
+    setTodos(todos);
   };
 
-  // getTodos();
   useEffect(() => {
     getTodos();
   }, []);
@@ -59,7 +63,7 @@ function App() {
       return;
     }
     console.log(todo);
-    const response = await fetch(`http://localhost:3000/todos`, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +106,7 @@ function App() {
           </form>
         </Paper>
         <Paper elevation={3} className="rounded-4">
-          <div className="mt-3 mt-md-5 p-3  pb-3 pb-md-5 px-md-5 h-100 overflow-auto">
+          <div className="mt-3 mt-md-5 p-3  pb-3 pb-md-5 px-md-5 h-100 overflow-auto pl">
             <CheckboxList
               todos={todos}
               deleteTodo={deleteTodo}
