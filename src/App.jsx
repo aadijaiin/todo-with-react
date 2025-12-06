@@ -8,7 +8,9 @@ import SingleLine from "./components/SingleLine";
 
 function App() {
   const [todos, setTodos] = useState([]);
+  const [todosLeft, setTodosLeft] = useState(0);
   const [todo, setTodo] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
 
   const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -20,7 +22,7 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        done: !done,
+        is_completed: !done,
       }),
     }).then((res) => {
       console.log(res);
@@ -47,7 +49,11 @@ function App() {
     const res = await fetch(`${url}?_sort=-timestamp`);
 
     const todos = await res.json();
-
+    let count = 0;
+    for (let todo of todos) {
+      if (!todo.is_completed) count++;
+    }
+    setTodosLeft(count);
     console.log("todos : ", todos);
     setTodos(todos);
   };
@@ -60,6 +66,10 @@ function App() {
     event.preventDefault();
     if (!todo || todo.trim().length <= 1) {
       console.log("invalid todo...");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 3000);
       return;
     }
     console.log(todo);
@@ -69,8 +79,8 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        todo: todo.trim(),
-        done: false,
+        title: todo.trim(),
+        is_completed: false,
         timestamp: new Date(),
       }),
     });
@@ -80,11 +90,11 @@ function App() {
   };
   return (
     <>
-      <div className="container p-3 p-md-5 rounded-4 my-3 my-md-5">
+      <div className="container mx-auto my-auto p-3 rounded-2xl md:p-5 md:my-5">
         <SingleLine />
-        <Paper elevation={2} className="border p-4 rounded-4">
+        <Paper elevation={2} className="p-4 rounded-2xl">
           <form
-            className="d-flex flex-column flex-md-row gap-3 gap-md-5 "
+            className="flex flex-col md:flex-row gap-3 md:gap-5 "
             onSubmit={(event) => addTodo(event)}
           >
             <TextField
@@ -97,23 +107,43 @@ function App() {
             />
             <Button
               variant="contained"
-              className="fs-6 rounded px-4"
+              className="rounded-2xl px-4"
               onClick={(e) => addTodo(e)}
             >
               <p className="m-0 me-2">Add</p>
               <i className="bi bi-plus-lg fs-5"></i>
             </Button>
           </form>
+          {/* Element() */}
+          {showMsg && (
+            <p className="text-red-600 font-bold text-center mb-0 mt-2">
+              Please enter a valid todo!
+            </p>
+          )}
         </Paper>
-        <Paper elevation={3} className="rounded-4">
-          <div className="mt-3 mt-md-5 p-3  pb-3 pb-md-5 px-md-5 h-100 overflow-auto pl">
-            <CheckboxList
-              todos={todos}
-              deleteTodo={deleteTodo}
-              toggleTodoState={toggleTodoState}
-            />
-          </div>
-        </Paper>
+
+        {todos.length == 0 && (
+          <p className="text-center mt-4 text-xl text-muted">
+            You have no todos, Add some now!
+          </p>
+        )}
+
+        {todos.length > 0 && (
+          <p className="text-center mt-4 font-medium text-xl">
+            You have {todosLeft} todos left.
+          </p>
+        )}
+        {todos.length > 0 && (
+          <Paper elevation={3} className="rounded-4">
+            <div className="mt-3 md:mt-5 p-3 pb-3 md:pb-5 md:px-5 overflow-auto">
+              <CheckboxList
+                todos={todos}
+                deleteTodo={deleteTodo}
+                toggleTodoState={toggleTodoState}
+              />
+            </div>
+          </Paper>
+        )}
       </div>
     </>
   );

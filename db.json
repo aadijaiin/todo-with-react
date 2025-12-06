@@ -1,64 +1,28 @@
 {
   "todos": [
     {
-      "id": "9aa2",
-      "todo": "sup",
-      "done": true,
-      "timestamp": "2025-12-04T06:51:46.623Z"
+      "id": "89ab",
+      "title": "lol",
+      "is_completed": true,
+      "timestamp": "2025-12-06T09:09:10.496Z"
     },
     {
-      "id": "f06b",
-      "todo": "hii",
-      "done": false,
-      "timestamp": "2025-12-04T11:54:13.769Z"
+      "id": "e08e",
+      "title": "how",
+      "is_completed": true,
+      "timestamp": "2025-12-06T09:09:11.655Z"
     },
     {
-      "id": "812c",
-      "todo": "how",
-      "done": true,
-      "timestamp": "2025-12-04T11:54:15.017Z"
+      "id": "b56d",
+      "title": "sup",
+      "is_completed": true,
+      "timestamp": "2025-12-06T09:33:05.525Z"
     },
     {
-      "id": "4cbd",
-      "todo": "are",
-      "done": false,
-      "timestamp": "2025-12-04T11:54:15.696Z"
-    },
-    {
-      "id": "687b",
-      "todo": "new todo 3",
-      "done": true,
-      "timestamp": "2025-12-04T11:54:42.207Z"
-    },
-    {
-      "id": "43f2",
-      "todo": "new ttodo 4",
-      "done": false,
-      "timestamp": "2025-12-04T11:54:45.873Z"
-    },
-    {
-      "id": "dad3",
-      "todo": "sup",
-      "done": true,
-      "timestamp": "2025-12-04T15:45:17.011Z"
-    },
-    {
-      "id": "f57a",
-      "todo": "how",
-      "done": false,
-      "timestamp": "2025-12-04T15:45:18.887Z"
-    },
-    {
-      "id": "bece",
-      "todo": "sup",
-      "done": true,
-      "timestamp": "2025-12-04T15:49:24.507Z"
-    },
-    {
-      "id": "cd8e",
-      "todo": "lmao",
-      "done": false,
-      "timestamp": "2025-12-05T18:23:13.000Z"
+      "id": "bd0c",
+      "title": "asdfasdf",
+      "is_completed": true,
+      "timestamp": "2025-12-06T09:33:11.890Z"
     }
   ]
 }

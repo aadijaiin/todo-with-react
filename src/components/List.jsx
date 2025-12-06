@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Divider from "@mui/material/Divider";
 
 export default function CheckboxList({ todos, deleteTodo, toggleTodoState }) {
   return (
@@ -15,49 +16,54 @@ export default function CheckboxList({ todos, deleteTodo, toggleTodoState }) {
         bgcolor: "background.paper",
         display: "flex",
         flexDirection: "column",
-        gap: 3,
       }}
     >
       {todos.map((value) => {
         const labelId = `checkbox-list-label-${value.id}`;
 
         return (
-          <ListItem
-            sx={{ borderBottom: "1px solid gray" }}
-            key={value.id}
-            secondaryAction={
-              <IconButton edge="end" aria-label="comments">
-                <DeleteIcon
-                  onClick={() => deleteTodo(value.id)}
-                  color="error"
+          <>
+            <ListItem
+              key={value.id}
+              secondaryAction={
+                <IconButton edge="end" aria-label="comments">
+                  <DeleteIcon
+                    onClick={() => deleteTodo(value.id)}
+                    color="error"
+                  />
+                </IconButton>
+              }
+              disablePadding
+            >
+              <ListItemButton role={undefined} dense>
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={value.is_completed}
+                    onChange={() =>
+                      toggleTodoState(value.id, value.is_completed)
+                    }
+                    tabIndex={-1}
+                    disableRipple
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  className={
+                    value.is_completed ? "text-decoration-line-through" : ""
+                  }
+                  id={labelId}
+                  primary={`${value.title}`}
+                  primaryTypographyProps={{
+                    // color: "primary",
+                    fontWeight: "medium",
+                    variant: "body2",
+                    fontSize: 20,
+                  }}
                 />
-              </IconButton>
-            }
-            disablePadding
-          >
-            <ListItemButton role={undefined} dense>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={value.done}
-                  onChange={() => toggleTodoState(value.id, value.done)}
-                  tabIndex={-1}
-                  disableRipple
-                />
-              </ListItemIcon>
-              <ListItemText
-                className={value.done ? "text-decoration-line-through" : ""}
-                id={labelId}
-                primary={`${value.todo}`}
-                primaryTypographyProps={{
-                  // color: "primary",
-                  fontWeight: "medium",
-                  variant: "body2",
-                  fontSize: 20,
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
+              </ListItemButton>
+            </ListItem>
+            <Divider color="black" />
+          </>
         );
       })}
     </List>
